@@ -32,7 +32,7 @@ Event.addEventType(\osc, {
 
 
 ~sketchTuple = PatternProxy( 
-			Ptuple(['interactWithSketch', 'padXY', Pseq(Array.series(1000, 0, 1).scramble, inf), Pseq(Array.series(200, 10, 1000/200).mirror, inf)] , inf) 
+			Ptuple(['takis', 'padXY', Pseq(Array.series(1000, 0, 1).scramble, inf), Pseq(Array.series(200, 10, 1000/200).mirror, inf)] , inf) 
 		);
 ~sketchDur = PatternProxy(Pseq(Array.geom(82, 0.003, 1.05).pyramid(2),inf));		
 
@@ -47,7 +47,7 @@ Event.addEventType(\osc, {
 
 ~pat.play;
 
-~sketchTuple.source = Pseq(["/testMessage", 123], inf);
+IperatouPatternsDefs.sketchTuple.source = Pseq([["/testMessage", 123]], inf);
 ~sketchTuple.source = Pn(["/testMessage", 123], inf);
 ~sketchTuple.source = Pseq([["/testMessage", 54321], [["/voice1", 54321], ["/voice2", 54321]]], inf);
 
