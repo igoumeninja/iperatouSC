@@ -1,121 +1,114 @@
 {\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf540
 {\fonttbl\f0\fnil\fcharset0 Monaco;}
-{\colortbl;\red255\green255\blue255;\red45\green170\blue79;\red255\green255\blue255;\red175\green11\blue11;
-\red167\green167\blue167;\red250\green248\blue227;\red160\green170\blue45;}
+{\colortbl;\red255\green255\blue255;\red191\green0\blue0;\red0\green0\blue191;\red96\green96\blue96;
+\red0\green115\blue0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
 \f0\fs18 \cf2 /* \
 iz Tuesday; October 6, 2009: 10:41 PM\
 Build some useful menus and keyboard shortcuts\
+*/\cf0 \
 \
-Instructions: Put this file in the following folder: \
-/Users/YourAccountName/Library/Application Support/SuperCollider/\
-\
-Edit by Aris Bezas Sun, 26 September 2010, 11:04AM\
-*/\cf3 \
-\
-\cf2 // =======================================================================\cf3 \
 \{\
-\cf2 /* building my menu of useful stuff "my stuff". \
-This here is a function because we want to keep all its variables inside its local scope. \
-We don't want to mess with any variables in the interpreter, because these are for the user. \
-*/\cf3 \
-	\cf4 var\cf3  g, a, midiResponders;\
-	g = \cf4 SCMenuGroup\cf3 (\cf4 nil\cf3 , \cf5 "Aris"\cf3 , \cf6 10\cf3 ); \cf2 // toolBar name\cf3 \
+	\cf3 var\cf0  g, a, midiResponders;\
+	g = \cf3 SCMenuGroup\cf0 (\cf3 nil\cf0 , \cf4 "Aris"\cf0 , 10); \cf2 // toolBar name\cf0 \
 \pard\pardeftab560\ql\qnatural
-\cf3 	\cf2 //------------------------- SOUND -------------------------	\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Initialize Sound Interaction"\cf3 ); \cf2 // first on the list\cf3 \
+\cf0 	\cf2 //------------------------- SOUND -------------------------	\cf0 \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Initialize Sound Interaction"\cf0 ); \
 	a.action = \{ \
 \pard\pardeftab560\li1140\fi-1140\ql\qnatural
-\cf3 	\cf4 Task\cf3 (\{\
+\cf0 	\cf3 Task\cf0 (\{\
 		if (not(s.serverRunning)) \{ s.boot \};\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab560\ql\qnatural\pardirnatural
-\cf3 			s.doWhenBooted \{\
-			\cf4 SendAmpFreq\cf3 .start;\
-			\cf6 0.1\cf3 .wait;\
-			\cf4 Synth\cf3 (\cf5 "SendAmpPitch"\cf3 );	\
+\cf0 			s.doWhenBooted \{\
+			\cf3 SendAmpFreq\cf0 .start;\
+			0.1.wait;\
+			\cf3 Synth\cf0 (\cf4 "SendAmpPitch"\cf0 );	\
 			\};					\
 		\}).start;	\
 \pard\pardeftab560\ql\qnatural
-\cf3 	\};\
-	a.setShortCut(\cf5 "i"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-s					\cf3 \
-	\cf2 //------------------------- COLORIZE -------------------------	\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Colorize"\cf3 );\
+\cf0 	\};\
+	a.setShortCut(\cf4 "i"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \cf2 // Cmd-ctrl-alt-i					\cf0 \
+	\cf2 //------------------------- COLORIZE -------------------------	\cf0 \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Colorize"\cf0 );\
 	a.action = \{ \
 \pard\pardeftab560\li1140\fi-1140\ql\qnatural
-\cf3 		\cf2 //putting a custom color theme into Document.themes\cf3 \
-		\cf4 Document\cf3 .themes.put\
-		(\cf7 \\igoumeninjaTheme\cf3 , \
+\cf0 		\cf2 //putting a custom color theme into Document.themes\cf0 \
+		\cf3 Document\cf0 .themes.put\
+		(\cf5 \\igoumeninjaTheme\cf0 , \
 			(\
-				classColor: \cf4 Color\cf3 .new255(\cf6 175\cf3 , \cf6 11\cf3 , \cf6 11\cf3 ),\
-				textColor: \cf4 Color\cf3 .new255(\cf6 255\cf3 , \cf6 255\cf3 , \cf6 255\cf3 ),\
-				stringColor: \cf4 Color\cf3 .new255(\cf6 167\cf3 ,\cf6 167\cf3 ,\cf6 167\cf3 ),\
-				commentColor: \cf4 Color\cf3 .new255(\cf6 45\cf3 ,\cf6 170\cf3 ,\cf6 79\cf3 ),\
-				symbolColor: \cf4 Color\cf3 .new255(\cf6 160\cf3 ,\cf6 170\cf3 ,\cf6 45\cf3 ),\
-				numberColor: \cf4 Color\cf3 .new255(\cf6 250\cf3 ,\cf6 248\cf3 ,\cf6 227\cf3 )\
+				classColor: \cf3 Color\cf0 .new255(175, 171, 11),\
+				textColor: \cf3 Color\cf0 .new255(255, 255, 255),\
+				stringColor: \cf3 Color\cf0 .new255(167,167,167),\
+				commentColor: \cf3 Color\cf0 .new255(45,170,79),\
+				symbolColor: \cf3 Color\cf0 .new255(160,170,45),\
+				numberColor: \cf3 Color\cf0 .new255(250,248,227)\
 			)\
 		);\
-		\
-		\cf2 //and then calling setTheme with the name:\cf3 \
-		\cf4 Document\cf3 .setTheme(\cf7 'igoumeninjaTheme'\cf3 );\
-		\cf2 //to see the current theme:\cf3 \
-		\cf4 Document\cf3 .theme;\
+		\cf3 Document\cf0 .setTheme(\cf5 'igoumeninjaTheme'\cf0 );\
+		\cf3 Document\cf0 .theme;\
 \pard\pardeftab560\ql\qnatural
-\cf3 		\cf4 Document\cf3 .current.background = \cf4 Color\cf3 (\cf6 0\cf3 , \cf6 0\cf3 , \cf6 0\cf3 , \cf6 1\cf3 );\
+\cf0 		\cf3 Document\cf0 .current.background = \cf3 Color\cf0 (0, 0, 0, 1);\
 	\};\
-	a.setShortCut(\cf5 "c"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-s					\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Reset Colorize"\cf3 );\
+	a.setShortCut(\cf4 "c"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Reset Colorize"\cf0 );\
 	a.action = \{ \
-		\cf4 Document\cf3 .setTheme(\cf7 'default'\cf3 );\
-		\cf4 Document\cf3 .current.background = \cf4 Color\cf3 (\cf6 255\cf3 ,\cf6 255\cf3 ,\cf6 255\cf3 , \cf6 1\cf3 );\
+		\cf3 Document\cf0 .setTheme(\cf5 'default'\cf0 );\
+		\cf3 Document\cf0 .current.background = \cf3 Color\cf0 (255,255,255, 1);\
 	\};\
-	a.setShortCut(\cf5 "C"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-s					\cf3 \
-	\cf2 //------------------------- OSC -------------------------	\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "post all incoming OSC messages"\cf3 );\
-	a.action = \{  \cf4 thisProcess\cf3 .recvOSCfunc = \{ \cf4 | ... args |\cf3  args.postln \}; \};\
-	a.setShortCut(\cf5 "o"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-o\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "stop posting incoming OSC messages"\cf3 );\
-	a.action = \{  \cf4 thisProcess\cf3 .recvOSCfunc = \cf4 nil\cf3  \};\
-	a.setShortCut(\cf5 "O"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-shift-o\cf3 \
-	\cf2 //------------------------- STARTUP FILE -------------------------		\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Open startup.rtf"\cf3 );\
+	a.setShortCut(\cf4 "C"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \
+	\cf2 //------------------------- OSC -------------------------	\cf0 \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Post All Incoming OSC Messages"\cf0 );\
+	a.action = \{  \cf3 thisProcess\cf0 .recvOSCfunc = \{ \cf3 | ... args |\cf0  args.postln \}; \};\
+	a.setShortCut(\cf4 "o"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Stop Posting Incoming OSC Messages"\cf0 );\
+	a.action = \{  \cf3 thisProcess\cf0 .recvOSCfunc = \cf3 nil\cf0  \};\
+	a.setShortCut(\cf4 "O"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \
+	\cf2 //------------------------- STARTUP FILE -------------------------		\cf0 \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Open startup.rtf"\cf0 );\
 	a.action = \{ 	\
-	(\cf5 "/Users/fou/Library/Application\\ Support/SuperCollider/startup.rtf"\cf3 ).openTextFile;\
+	(\cf4 "/Users/fou/Library/Application\\ Support/SuperCollider/startup.rtf"\cf0 ).openTextFile;\
 	\};\
-	a.setShortCut(\cf5 "s"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-s						\cf3 \
-	\cf2 // ------------------------- SAVE DOCUMENTS POSITION  -----------------------\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Save document paths and windows"\cf3 );\
+	a.setShortCut(\cf4 "s"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \cf2 // Cmd-ctrl-alt-s						\cf0 \
+	\cf2 // ------------------------- SAVE DOCUMENTS POSITION  -----------------------\cf0 \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Save Document Paths and Windows"\cf0 );\
 	a.action = \{\
-		\cf4 Archive\cf3 .global.put(\cf7 \\myDocuments\cf3 , \
+		\cf3 Archive\cf0 .global.put(\cf5 \\myDocuments\cf0 , \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab560\ql\qnatural\pardirnatural
-\cf3 			\cf4 Document\cf3 .allDocuments collect: \{ \cf4 | d |\cf3  \
+\cf0 			\cf3 Document\cf0 .allDocuments collect: \{ \cf3 | d |\cf0  \
 			(name: d.name, bounds: d.bounds, path: d.path)\
 		\});\
-		\cf5 "Document positions and paths saved"\cf3 .postln;\
+		\cf4 "Document positions and paths saved"\cf0 .postln;\
 	\};\
 \pard\pardeftab560\ql\qnatural
-\cf3 	a.setShortCut(\cf5 "D"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-D	\cf3 \
-	\cf2 // ------------------------- LOAD SAVED DOCUMENTS  -----------------------\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Load saved documents"\cf3 );\
+\cf0 	a.setShortCut(\cf4 "D"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \
+	\cf2 // ------------------------- LOAD SAVED DOCUMENTS  -----------------------\cf0 \
+	a = \cf3 SCMenuItem\cf0 (g, \cf4 "Load Saved Documents"\cf0 );\
 	a.action = \{\
-		\cf4 var\cf3  session;\
-		session = \cf4 Archive\cf3 .global.at(\cf7 \\myDocuments\cf3 );\
+		\cf3 var\cf0  session;\
+		session = \cf3 Archive\cf0 .global.at(\cf5 \\myDocuments\cf0 );\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab560\ql\qnatural\pardirnatural
-\cf3 		session do: \{ \cf4 | d |\cf3 \
+\cf0 		session do: \{ \cf3 | d |\cf0 \
 			if (d.path.isNil) \{\
-			if (d.name != \cf5 " post "\cf3 ) \{\
-				\cf4 Document\cf3 (d.name).bounds_(d.bounds)\
+			if (d.name != \cf4 " post "\cf0 ) \{\
+				\cf3 Document\cf0 (d.name).bounds_(d.bounds)\
 			\}\{\
-				\cf4 Document\cf3 .allDocuments.detect(\{ \cf4 | d |\cf3  d.name == \cf5 " post "\cf3  \}).bounds_(d.bounds);\
+				\cf3 Document\cf0 .allDocuments.detect(\{ \cf3 | d |\cf0  d.name == \cf4 " post "\cf0  \}).bounds_(d.bounds);\
 			\}\
 		\}\{\
-			\cf4 Document\cf3 .open(d.path).bounds_(d.bounds)\
+			\cf3 Document\cf0 .open(d.path).bounds_(d.bounds)\
 		\}\
 		\};\
 	\};\
 \pard\pardeftab560\ql\qnatural
-\cf3 	a.setShortCut(\cf5 "d"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-d\cf3 \
+\cf0 	a.setShortCut(\cf4 "d"\cf0 , \cf3 true\cf0 , \cf3 true\cf0 ); \
 \}.value;\
 \pard\pardeftab560\li1140\fi-1140\ql\qnatural
-\cf4 Document\cf3 .listener.bounds = \cf4 Rect\cf3 (\cf6 813\cf3 ,\cf6 4\cf3 ,\cf6 627\cf3 ,\cf6 874\cf3 );\cf2 // initial position for post window\cf3 \
-}
+\cf3 Document\cf0 .listener.bounds = \cf3 Rect\cf0 (1000,4,440,874);\
+\pard\pardeftab720\ql\qnatural
+\cf3 Document\cf0 .new.bounds = \cf3 Rect\cf0 (600, 4, 400, 874);\
+\pard\pardeftab560\ql\qnatural
+\cf3 Document\cf0 .listener.background = \cf3 Color\cf0 (0, 0, 0, 1);\
+\cf3 Document\cf0 .listener.stringColor = \cf3 Color\cf0 (1,1,1);\
+\cf3 Document\cf0 .listener.stringColor_(\cf3 Color\cf0 .white); \
+\cf3 Document\cf0 .postColor_(\cf3 Color\cf0 .white);}
