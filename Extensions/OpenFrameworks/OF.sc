@@ -13,13 +13,14 @@ OF {
 	}
 
 	defaultAddress {
-		//^NetAddr("127.0.0.1", 12345); // 12345  "192.168.1.65"
-		^NetAddr("192.168.1.65", 12345);
+		^NetAddr("127.0.0.1", 12345); // 12345  "192.168.1.65"
+		//^NetAddr("192.168.1.65", 12345);
 	}
 
 	*doesNotUnderstand { | message ... args |
 		if (default.isNil) { default = this.new };
-		format("here I will send message % with args %", message, args); //.postln;
+		//format("here I will send message % with args %", message, args).postln;
+		format("OF_%%", message, args).postln;
 		default.send(message, args);
 	}
 	

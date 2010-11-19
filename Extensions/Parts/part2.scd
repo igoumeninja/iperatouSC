@@ -3,7 +3,6 @@ Meros B
 
 ~photo slide show
 */
-Posc
 
 OSCresponder.new(nil, "sched", { arg time, resp, msg; OF.image("stopMotion", Array.series(83, 0, 1).choose);} ).add; 
 (

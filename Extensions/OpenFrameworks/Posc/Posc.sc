@@ -26,7 +26,8 @@ Posc : Pbind {
 	}
 
 	*new { arg ... pairs; 	// add the type - osc pair, so we dont have to provide it explicitly
-		address = NetAddr("127.0.0.1", 57120);
+		//address = NetAddr("127.0.0.1", 57120);
+		address = NetAddr("127.0.0.1", 12345);
 		pairs = pairs addAll: [\type, \osc];
 		if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, address] };
 		^super.new(*pairs);
