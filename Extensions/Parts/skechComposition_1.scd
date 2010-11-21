@@ -6,26 +6,29 @@ Aris Bezas Fri, 19 November 2010, 19:34 PM
 
 (
 ~sketchComposition = [
-	SyncAction(\beats, { | beat |
-		beat.postln;
-		switch (beat,
-			0, {	
-				// INITIALIZE
-				PoscDef.load;
-				Pdef(\sketchPat).play;
-				PoscDef.message.source = 
-					Ptuple(
-						[	
-							Ptuple(['rgb', 'r8', Pseq([0,255,100], inf)] , inf),
-							Ptuple(['rgb', 'g8', Pseq([0,255,100], inf)] , inf),
-							Ptuple(['rgb', 'b8', Pseq([0,255,100], inf)] , inf),							Ptuple(['rgb', 'a8', Pseq([30,30,30], inf)] , inf)
-						], inf) ;
-				PoscDef.duration.source = Pseq([0.2],inf);				OF.interactWithSound("activate", 1);
-				OF.interactWithSound("maxSoundElasticity",0.1);
-				OF.interactWithSound("glBeginType", 1);
-				OF.interactWithSound("numSoundSketches", 800);				OF.rgb("background", 0,0,0,120);						OF.rgb("sound", 255,255,255,255);				}		
-		);	
-		if (beat > 120 and:  { beat <  288;} and: { beat % 1 == 0;}) {  };	})
+SyncAction(\beats, { | beat |
+	beat.postln;
+	switch (beat,
+		0, {	
+			// INITIALIZE
+			PoscDef.load;
+			Pdef(\sketchPat).play;
+			PoscDef.message.source = 
+				Ptuple(
+					[	
+						Ptuple(['rgb', 'r8', Pseq([0,255], inf)] , inf),
+						Ptuple(['rgb', 'g8', Pseq([0,255], inf)] , inf),
+						Ptuple(['rgb', 'b8', Pseq([0,255], inf)] , inf),						Ptuple(['rgb', 'a8', Pseq([30,30], inf)] , inf)
+					], inf) ;
+			PoscDef.duration.source = Pseq([0.2],inf);			OF.interactWithSound("activate", 1);
+			OF.interactWithSound("maxSoundElasticity",0.1);
+			OF.interactWithSound("glBeginType", 1);
+			OF.interactWithSound("numSoundSketches", 800);			OF.rgb("background", 0,0,0,120);						OF.rgb("sound", 255,255,255,255);				},
+		10, {
+			PoscDef.duration.source = Pseq([1, Pseq([0.1, 0.8],1)],inf); 
+		}	
+	);	
+	if (beat > 120 and:  { beat <  288;} and: { beat % 1 == 0;}) {  };	})
 ];
 )
 ~beatPhrase do: _.deactivate;
@@ -42,12 +45,12 @@ OSCresponder.new(~oFaddr, nil, { arg time, resp, msg; 5.postln} ).add;
 
 
 PoscDef.message.source = 
-	Ptuple(
-		[	
-			Ptuple(['rgb', 'r8', Pseq([10,100,1], inf)] , inf),
-			Ptuple(['rgb', 'g8', Pseq([20,200,2], inf)] , inf),
-			Ptuple(['rgb', 'a8', Pseq([30,300,3], inf)] , inf)
-		], inf) ;
+Ptuple(
+	[	
+		Ptuple(['rgb', 'r8', Pseq([10,100,1], inf)] , inf),
+		Ptuple(['rgb', 'g8', Pseq([20,200,2], inf)] , inf),
+		Ptuple(['rgb', 'a8', Pseq([30,300,3], inf)] , inf)
+	], inf) ;
 
 
 */

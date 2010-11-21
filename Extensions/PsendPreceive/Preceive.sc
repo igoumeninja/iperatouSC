@@ -4,7 +4,7 @@ Define phrases to listen to (receive), in the form of osc messages send by Psend
 
 // 1. Define the structure of the piece to listen to
 ~score = Preceive(				// Top phrase. All other phrases are contained here. 
-	\start->{ ... }, 			// at start of phrase do ...
+	\play->{ ... }, 			// at play of phrase do ...
 	\end->{ ... }, 			// at end of phrase do ...
 	1->{ ... }, 				// at beat 1 of phrase do ...
 	'1'->Preceive( ... ), 		// at subphrase 1 do ...
@@ -15,7 +15,7 @@ Define phrases to listen to (receive), in the form of osc messages send by Psend
 Note: The name of the class suggests that this should be a subclass of Pattern. 
 This could be done in the future. 
 
-Preceive.start;
+Preceive.play;
 Preceive.stop;
 Preceive.verbose = true;
 Preceive.verbose = false;
@@ -34,18 +34,24 @@ Preceive.addAction(1, { "hello".postln; });
 
 NetAddr.localAddr.sendMsg(\beat, 1);
 
-Preceive.start("something");
+Preceive.play("something");
 
 Preceive.setEvent(\bla);
 
+
+
+NetAddr.localAddr.sendMsg(\start);
+ 
+Preceive.event;
+
+
 Preceive(
-	\start->{ "starting".postln; },
+	\start->{ "playing".postln; },
 	\a -> { "this was alpha".postln; },
 	1 -> { "beat 1".postln; },
 	5 -> { "beat 5".postln; },
 	\end -> { "end".postln; }
-).start;
-
+).play;
 
 */
 
@@ -60,11 +66,11 @@ Preceive : Event {
 		actions do: { | a | this.addAction(a.key, a.value) };
 	}
 	
-	start {
-		this.class.start(this);
+	play {
+		this.class.play(this);
 	}
 	
-	*start { | piece |
+	*play { | piece |
 		var newPiece;
 		thisProcess.recvOSCfunc = this;
 		this.getEvent;
@@ -79,8 +85,11 @@ Preceive : Event {
 	*clear { event = this.new }
 	
 	*setEvent { | piece |
+//		piece.postln;
 		if (piece.isNil) { ^this.getEvent };
 		event = this.getEvent[piece] ? piece;
+//		[this, thisMethod.name, event].postln;
+		^event;
 	}
 
 	*stop {	
@@ -114,7 +123,7 @@ Preceive : Event {
 	}
 
 	addTagAction { | tag, action |
-		// later some more work here to deal with start, stop and phrases
+		// later some more work here to deal with play, stop and phrases
 		this[tag] = action;
 	}
 	
@@ -142,7 +151,7 @@ Preceive : Event {
 	}
 
 	removeTagAction { | tag, action |
-		// later some more work here to deal with start, stop and phrases
+		// later some more work here to deal with play, stop and phrases
 		this[tag] = action;
 	}
 

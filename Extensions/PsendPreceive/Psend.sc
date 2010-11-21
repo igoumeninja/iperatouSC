@@ -1,5 +1,13 @@
 /*
 
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+TODO: enable playing multiple posc instances in parallel. See Psend:embedInStream, commented code. 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 p = Posc(\msg, Pseq([['alpha', 100], [['beta', 200], [\gamma, 300]]], inf)).play;
 
 
@@ -40,13 +48,24 @@ Posc(\msg, Psend([\bla])).play;
 Posc(\msg, Psend(Pseq([[\bla], [\blo, 3], [[\chord1, 2], [\chord2, 2]]], 2))).play;
 
 
+Posc.play([\a, \b, \c]);
+
+
 */
 
 Psend  : FilterPattern {
 	var <>name = \phrase;
 	
 	embedInStream { arg event;
-//		[this, \startEMBED, event].postln;
+		
+//		[this, \startEMBED, event, /* event.parent, */ event[\posctest]].postln;
+		
+/* Following code should be used to enable playing many Posc instances in parallel: 
+		var posc;
+		posc = event[\posc] ? Posc;
+		Posc.broadcast(\start, name);
+
+*/			
 		Posc.broadcast(\start, name);
 		event = pattern.embedInStream(event);
 //		[this, \endEMBED, event].postln;

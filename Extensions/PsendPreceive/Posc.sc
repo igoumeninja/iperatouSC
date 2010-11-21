@@ -56,7 +56,8 @@ Posc : Pbind {
 
 	*new { | ... pairs | 	// add the type - osc pair, so we dont have to provide it explicitly
 		pairs = pairs addAll: [\type, \osc];
-		if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr.localAddr] };
+		//if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr.localAddr] };
+		if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr("127.0.0.1", 12345)] };
 		if (pairs includes: \beat) {} { pairs = pairs addAll: [\beat, Pseries(1, 1, inf)] };
 		^super.new(*pairs).init;
 	}
@@ -73,7 +74,7 @@ Posc : Pbind {
 //		}
 	}
 	
-	*broadcast { | ... msg | posc.broadcast(msg) }
+	*broadcast { | msg | posc.broadcast(msg) }
 
 	broadcast { | msg | 	// used by Psend to broadcast start, end
 		dest do: _.sendBundle(0, msg);
@@ -97,7 +98,8 @@ Posc : Pbind {
 
 	*play { | patternContents ... pairs |
 	// utility class for playing a Psend phrase from any pattern or array of patterns
-		this.new(\msg, Psend(Pseq(patternContents.asArray, 1)), *pairs).play;
+		this.new(\msg, Psend(Pseq(patternContents.asArray, 1)), *pairs)
+			.play(protoEvent: (posctest: 1234567890));
 	}
 
 	play { arg clock, protoEvent, quant;

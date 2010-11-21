@@ -6,8 +6,8 @@ Aris Bezas Mon, 01 November 2010, 07:41PM
 */
 (
 
-//~addr = NetAddr("127.0.0.1", 12345);
-~addr = NetAddr("192.168.1.65", 12345);
+~addr = NetAddr("127.0.0.1", 12345);`
+//~addr = NetAddr("192.168.1.65", 12345);
 Event.addEventType(\osc, { ~dest.sendBundle(~latency, ~msg); });
 
 //page1
@@ -114,7 +114,7 @@ OSCresponder.new(nil, "/backTask", { arg time, resp, msg;
 
 
 				
-//page3
+//page3`itou
 
 OSCresponder.new(nil, "/backgroundBlack", { arg time, resp, msg; OF.background(0,0,0);} ).add; 
 OSCresponder.new(nil, "/a8", { arg time, resp, msg; OF.rgb("a8", msg[1].round);} ).add; 
@@ -376,4 +376,4 @@ Pdef(\backgroundErase,Pbind(
 
 
 
-)
+	)
