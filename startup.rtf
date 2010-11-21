@@ -1,114 +1,132 @@
 {\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf540
 {\fonttbl\f0\fnil\fcharset0 Monaco;}
-{\colortbl;\red255\green255\blue255;\red191\green0\blue0;\red0\green0\blue0;\red0\green0\blue191;
-\red96\green96\blue96;\red0\green115\blue0;}
+{\colortbl;\red255\green255\blue255;\red225\green170\blue79;\red175\green171\blue255;\red167\green167\blue167;
+\red250\green248\blue227;\red160\green170\blue45;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
 \f0\fs18 \cf2 /* \
 iz Tuesday; October 6, 2009: 10:41 PM\
 Build some useful menus and keyboard shortcuts\
-*/\cf3 \
+edit by ab\
+*/\cf1 \
 \
 \{\
-	\cf4 var\cf3  g, a, midiResponders;\
-	g = \cf4 SCMenuGroup\cf3 (\cf4 nil\cf3 , \cf5 "Aris"\cf3 , 10); \cf2 // toolBar name\cf3 \
+	\cf3 var\cf1  g, a, midiResponders;\
+	g = \cf3 SCMenuGroup\cf1 (\cf3 nil\cf1 , \cf4 "Aris"\cf1 , \cf5 10\cf1 ); \cf2 // toolBar name\cf1 \
 \pard\pardeftab560\ql\qnatural
-\cf3 	\cf2 //------------------------- SOUND -------------------------	\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Initialize Sound Interaction"\cf3 ); \
+\cf1 	\cf2 //------------------------- SOUND -------------------------	\cf1 \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Initialize Sound Interaction"\cf1 ); \
 	a.action = \{ \
 \pard\pardeftab560\li1140\fi-1140\ql\qnatural
-\cf3 	\cf4 Task\cf3 (\{\
+\cf1 	\cf3 Task\cf1 (\{\
 		if (not(s.serverRunning)) \{ s.boot \};\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab560\ql\qnatural\pardirnatural
-\cf3 			s.doWhenBooted \{\
-			\cf4 SendAmpFreq\cf3 .start;\
-			0.1.wait;\
-			\cf4 Synth\cf3 (\cf5 "SendAmpPitch"\cf3 );	\
+\cf1 			s.doWhenBooted \{\
+			\cf3 SendAmpFreq\cf1 .start;\
+			\cf5 0.1\cf1 .wait;\
+			\cf3 Synth\cf1 (\cf4 "SendAmpPitch"\cf1 );	\
 			\};					\
 		\}).start;	\
 \pard\pardeftab560\ql\qnatural
-\cf3 	\};\
-	a.setShortCut(\cf5 "i"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-i					\cf3 \
-	\cf2 //------------------------- COLORIZE -------------------------	\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Colorize"\cf3 );\
+\cf1 	\};\
+	a.setShortCut(\cf4 "i"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \cf2 // Cmd-ctrl-alt-i\
+\cf1 	\cf2 //------------------------- SERVER BOOT/QUIT -------------------------	\cf1 \
+\cf2 	\cf1 a = \cf3 SCMenuItem\cf1 (g, \cf4 "boot localhost scserver"\cf1 );\
 	a.action = \{ \
 \pard\pardeftab560\li1140\fi-1140\ql\qnatural
-\cf3 		\cf2 //putting a custom color theme into Document.themes\cf3 \
-		\cf4 Document\cf3 .themes.put\
-		(\cf6 \\igoumeninjaTheme\cf3 , \
-			(\
-				classColor: \cf4 Color\cf3 .new255(175, 171, 255),\
-				textColor: \cf4 Color\cf3 .new255(255, 255, 255),\
-				stringColor: \cf4 Color\cf3 .new255(167,167,167),\
-				commentColor: \cf4 Color\cf3 .new255(225,170,79),\
-				symbolColor: \cf4 Color\cf3 .new255(160,170,45),\
-				numberColor: \cf4 Color\cf3 .new255(250,248,227)\
-			)\
-		);\
-		\cf4 Document\cf3 .setTheme(\cf6 'igoumeninjaTheme'\cf3 );\
-		\cf4 Document\cf3 .theme;\
+\cf1 		Server.local.boot;\
 \pard\pardeftab560\ql\qnatural
-\cf3 		\cf4 Document\cf3 .current.background = \cf4 Color\cf3 (0, 0, 0, 0.97);\
-	\};\
-	a.setShortCut(\cf5 "c"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Reset Colorize"\cf3 );\
+\cf1 	\};\
+	a.setShortCut(\cf4 "l"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
+\cf2 	\cf1 a = \cf3 SCMenuItem\cf1 (g, \cf4 "quit localhost scserver"\cf1 );\
 	a.action = \{ \
-		\cf4 Document\cf3 .setTheme(\cf6 'default'\cf3 );\
-		\cf4 Document\cf3 .current.background = \cf4 Color\cf3 (255,255,255, 1);\
+\pard\pardeftab560\li1140\fi-1140\ql\qnatural
+\cf1 		Server.local.quit;\
+\pard\pardeftab560\ql\qnatural
+\cf1 	\};\
+	a.setShortCut(\cf4 "L"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
+\
+	\cf2 //------------------------- COLORIZE -------------------------	\
+	\cf3 Document\cf1 .themes.put(\cf6 \\igoumeninjaTheme\cf1 , \
+\pard\pardeftab560\li1140\fi-1140\ql\qnatural
+\cf1 		(\
+			classColor: \cf3 Color\cf1 .new255(\cf5 175\cf1 , \cf5 171\cf1 , \cf5 255\cf1 ),\
+			textColor: \cf3 Color\cf1 .new255(\cf5 255\cf1 , \cf5 255\cf1 , \cf5 255\cf1 ),\
+			stringColor: \cf3 Color\cf1 .new255(\cf5 167\cf1 ,\cf5 167\cf1 ,\cf5 167\cf1 ),\
+			commentColor: \cf3 Color\cf1 .new255(\cf5 225\cf1 ,\cf5 170\cf1 ,\cf5 79\cf1 ),\
+			symbolColor: \cf3 Color\cf1 .new255(\cf5 160\cf1 ,\cf5 170\cf1 ,\cf5 45\cf1 ),\
+			numberColor: \cf3 Color\cf1 .new255(\cf5 250\cf1 ,\cf5 248\cf1 ,\cf5 227\cf1 )\
+		)\
+	);\
+\pard\pardeftab560\ql\qnatural
+\cf1 \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Colorize"\cf1 );\
+	a.action = \{ \
+\pard\pardeftab560\li1140\fi-1140\ql\qnatural
+\cf1 		\cf2 //putting a custom color theme into Document.themes\cf1 \
+		\cf3 Document\cf1 .setTheme(\cf6 'igoumeninjaTheme'\cf1 );\
+		\cf3 Document\cf1 .theme;\
+\pard\pardeftab560\ql\qnatural
+\cf1 		\cf3 Document\cf1 .current.background = \cf3 Color\cf1 (\cf5 0\cf1 , \cf5 0\cf1 , \cf5 0\cf1 , \cf5 0.97\cf1 );\
 	\};\
-	a.setShortCut(\cf5 "C"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \
-	\cf2 //------------------------- OSC -------------------------	\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Post All Incoming OSC Messages"\cf3 );\
-	a.action = \{  \cf4 thisProcess\cf3 .recvOSCfunc = \{ \cf4 | ... args |\cf3  args.postln \}; \};\
-	a.setShortCut(\cf5 "o"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Stop Posting Incoming OSC Messages"\cf3 );\
-	a.action = \{  \cf4 thisProcess\cf3 .recvOSCfunc = \cf4 nil\cf3  \};\
-	a.setShortCut(\cf5 "O"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \
-	\cf2 //------------------------- STARTUP FILE -------------------------		\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Open startup.rtf"\cf3 );\
+	a.setShortCut(\cf4 "c"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Reset Colorize"\cf1 );\
+	a.action = \{ \
+		\cf3 Document\cf1 .setTheme(\cf6 'default'\cf1 );\
+		\cf3 Document\cf1 .current.background = \cf3 Color\cf1 (\cf5 255\cf1 ,\cf5 255\cf1 ,\cf5 255\cf1 , \cf5 1\cf1 );\
+	\};\
+	a.setShortCut(\cf4 "C"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
+	\cf2 //------------------------- OSC -------------------------	\cf1 \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Post All Incoming OSC Messages"\cf1 );\
+	a.action = \{  \cf3 thisProcess\cf1 .recvOSCfunc = \{ \cf3 | ... args |\cf1  args.postln \}; \};\
+	a.setShortCut(\cf4 "o"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Stop Posting Incoming OSC Messages"\cf1 );\
+	a.action = \{  \cf3 thisProcess\cf1 .recvOSCfunc = \cf3 nil\cf1  \};\
+	a.setShortCut(\cf4 "O"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
+	\cf2 //------------------------- STARTUP FILE -------------------------		\cf1 \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Open startup.rtf"\cf1 );\
 	a.action = \{ 	\
-	(\cf5 "/Users/fou/Library/Application\\ Support/SuperCollider/startup.rtf"\cf3 ).openTextFile;\
+	(\cf4 "/Users/fou/Library/Application\\ Support/SuperCollider/startup.rtf"\cf1 ).openTextFile;\
 	\};\
-	a.setShortCut(\cf5 "s"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \cf2 // Cmd-ctrl-alt-s						\cf3 \
-	\cf2 // ------------------------- SAVE DOCUMENTS POSITION  -----------------------\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Save Document Paths and Windows"\cf3 );\
+	a.setShortCut(\cf4 "s"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \cf2 // Cmd-ctrl-alt-s						\cf1 \
+	\cf2 // ------------------------- SAVE DOCUMENTS POSITION  -----------------------\cf1 \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Save Document Paths and Windows"\cf1 );\
 	a.action = \{\
-		\cf4 Archive\cf3 .global.put(\cf6 \\myDocuments\cf3 , \
+		\cf3 Archive\cf1 .global.put(\cf6 \\myDocuments\cf1 , \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab560\ql\qnatural\pardirnatural
-\cf3 			\cf4 Document\cf3 .allDocuments collect: \{ \cf4 | d |\cf3  \
+\cf1 			\cf3 Document\cf1 .allDocuments collect: \{ \cf3 | d |\cf1  \
 			(name: d.name, bounds: d.bounds, path: d.path)\
 		\});\
-		\cf5 "Document positions and paths saved"\cf3 .postln;\
+		\cf4 "Document positions and paths saved"\cf1 .postln;\
 	\};\
 \pard\pardeftab560\ql\qnatural
-\cf3 	a.setShortCut(\cf5 "D"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \
-	\cf2 // ------------------------- LOAD SAVED DOCUMENTS  -----------------------\cf3 \
-	a = \cf4 SCMenuItem\cf3 (g, \cf5 "Load Saved Documents"\cf3 );\
+\cf1 	a.setShortCut(\cf4 "D"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
+	\cf2 // ------------------------- LOAD SAVED DOCUMENTS  -----------------------\cf1 \
+	a = \cf3 SCMenuItem\cf1 (g, \cf4 "Load Saved Documents"\cf1 );\
 	a.action = \{\
-		\cf4 var\cf3  session;\
-		session = \cf4 Archive\cf3 .global.at(\cf6 \\myDocuments\cf3 );\
+		\cf3 var\cf1  session;\
+		session = \cf3 Archive\cf1 .global.at(\cf6 \\myDocuments\cf1 );\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab560\ql\qnatural\pardirnatural
-\cf3 		session do: \{ \cf4 | d |\cf3 \
+\cf1 		session do: \{ \cf3 | d |\cf1 \
 			if (d.path.isNil) \{\
-			if (d.name != \cf5 " post "\cf3 ) \{\
-				\cf4 Document\cf3 (d.name).bounds_(d.bounds)\
+			if (d.name != \cf4 " post "\cf1 ) \{\
+				\cf3 Document\cf1 (d.name).bounds_(d.bounds)\
 			\}\{\
-				\cf4 Document\cf3 .allDocuments.detect(\{ \cf4 | d |\cf3  d.name == \cf5 " post "\cf3  \}).bounds_(d.bounds);\
+				\cf3 Document\cf1 .allDocuments.detect(\{ \cf3 | d |\cf1  d.name == \cf4 " post "\cf1  \}).bounds_(d.bounds);\
 			\}\
 		\}\{\
-			\cf4 Document\cf3 .open(d.path).bounds_(d.bounds)\
+			\cf3 Document\cf1 .open(d.path).bounds_(d.bounds)\
 		\}\
 		\};\
 	\};\
 \pard\pardeftab560\ql\qnatural
-\cf3 	a.setShortCut(\cf5 "d"\cf3 , \cf4 true\cf3 , \cf4 true\cf3 ); \
+\cf1 	a.setShortCut(\cf4 "d"\cf1 , \cf3 true\cf1 , \cf3 true\cf1 ); \
 \}.value;\
 \pard\pardeftab560\li1140\fi-1140\ql\qnatural
-\cf4 Document\cf3 .listener.bounds = \cf4 Rect\cf3 (1000,4,440,874);\
-\pard\pardeftab720\ql\qnatural
-\cf2 //Document.new.bounds = Rect(600, 4, 400, 874);\cf3 \
+\cf3 Document\cf1 .listener.bounds = \cf3 Rect\cf1 (\cf5 700\cf1 ,\cf5 4\cf1 ,\cf5 740\cf1 ,\cf5 874\cf1 );\
 \pard\pardeftab560\ql\qnatural
-\cf4 Document\cf3 .listener.background = \cf4 Color\cf3 (0, 0, 0, 0.97);\
-\cf4 Document\cf3 .listener.stringColor = \cf4 Color\cf3 (1,1,1);\
-\cf4 Document\cf3 .listener.stringColor_(\cf4 Color\cf3 .white); \
-\cf4 Document\cf3 .postColor_(\cf4 Color\cf3 .white);}
+\cf3 Document\cf1 .listener.background = \cf3 Color\cf1 (\cf5 0\cf1 , \cf5 0\cf1 , \cf5 0\cf1 , \cf5 0.97\cf1 );\
+\cf3 Document\cf1 .listener.stringColor = \cf3 Color\cf1 (\cf5 1\cf1 ,\cf5 1\cf1 ,\cf5 1\cf1 );\
+\cf3 Document\cf1 .listener.stringColor_(\cf3 Color\cf1 .white); \
+\cf3 Document\cf1 .postColor_(\cf3 Color\cf1 .white);\
+\cf2 //Document.current.bounds = Rect(600, 4, 400, 874);}
