@@ -117,7 +117,7 @@ OSCresponder.new(nil, "/backTask", { arg time, resp, msg;
 
 
 				
-//page3`itou
+//page3
 
 OSCresponder.new(nil, "/backgroundBlack", { arg time, resp, msg; OF.background(0,0,0);} ).add; 
 OSCresponder.new(nil, "/a8", { arg time, resp, msg; OF.rgb("a8", msg[1].round);} ).add; 
