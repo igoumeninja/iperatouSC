@@ -1,13 +1,16 @@
 /*
+
 Create OSCResponders for recieving OSC from iPod and 
 forward them with a good syntax to openFrameworks.
+
+Define NetAddress at  Posc, OF, SendAmpFreq
 
 Aris Bezas Mon, 01 November 2010, 07:41PM
 */
 (
 
-~addr = NetAddr("127.0.0.1", 12345);`
-//~addr = NetAddr("192.168.1.65", 12345);
+//~addr = NetAddr("127.0.0.1", 12345);
+~addr = NetAddr("169.254.198.56", 12345);
 Event.addEventType(\osc, { ~dest.sendBundle(~latency, ~msg); });
 
 //page1
