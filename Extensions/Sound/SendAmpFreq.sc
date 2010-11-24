@@ -44,9 +44,8 @@ SendAmpFreq {
 	// start initialize	
 	init { | argServer, argAddr, argChan = 0 |
 		server = argServer ?? { Server.default };  //define server
-		//addr =  argAddr ?? { NetAddr("127.0.0.1", 12345); }; //localhost, oF port
-		//addr =  argAddr ?? { NetAddr("127.0.0.1", 12345); }; //localhost, oF port
-		addr =  argAddr ?? { NetAddr("169.254.233.24", 12345); }; //localhost, 
+		addr =  argAddr ?? { NetAddr("127.0.0.1", 12345); }; //localhost, oF port
+		//addr =  argAddr ?? { NetAddr("169.254.233.24", 12345); }; // server
 		chan = argChan;
 		this.makeResponders;	// call makeResponders
 	}
