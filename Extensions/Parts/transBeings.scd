@@ -1,8 +1,8 @@
 /*
-Visual composition framework using sketch Class
+TransBeing composition framework using sketch Class and iperatou characters
 
 menu
-OF.interactWithSound("maxSoundElasticity", 0.1);
+OF.interactWithSound("maxSoundElasticity", 0.5);
 OF.interactWithSound("glBeginType", 0);
 OF.interactWithSound("numSoundSketches", 10);
 
@@ -22,14 +22,14 @@ SyncAction(\beats, { | beat |
 			PoscDef.dur0.source = Pseq([1],inf);
 			OF.interactWithSound("activate", 1);
 			OF.interactWithSound("maxSoundElasticity",0.1);
-			OF.interactWithSound("glBeginType", 0);
-			OF.interactWithSound("numSoundSketches", 10);			OF.rgb("background", 0,0,0,30);						OF.rgb("sound", 255,255,255,255);				},
+			OF.interactWithSound("glBeginType", 1);
+			OF.interactWithSound("numSoundSketches", 1);			OF.rgb("background", 0,0,0,30);						OF.rgb("sound", 255,255,255,255);				},
 		10, {
 			
 		}	
 	);	
 	if (beat > 0 and:  { beat <  288;} and: { beat % 1 == 0;}) {  };
-	//if (beat % 2 == 0) { OF.interactWithSound("maxSoundElasticity", 1.rand); };
+	//if (beat % 10 == 0;) { OF.interactWithSound("maxSoundElasticity", 1.rand); };
 	
 	})
 ];
@@ -43,6 +43,26 @@ SyncAction(\beats, { | beat |
 
 /*
 ##### LIVE CODING #####
+~type = OSCresponder.new(nil, "sched", { arg time, resp, msg; OF.interactWithSound("glBeginType",(0..1).choose);} ).add; 
+~numbers = OSCresponder.new(nil, "sched", { arg time, resp, msg; OF.interactWithSound("numSoundSketches",(1.999).choose);} ).add; 
+~iperatou = OSCresponder.new(nil, "sched", { arg time, resp, msg; OF.background(0,0,0);OF.effect("iperatou","shoot");} ).add;
+~iperatouSmall = OSCresponder.new(nil, "sched", { arg time, resp, msg; OF.renderString("string",["~","!","@","#","$","%","^","*","(",")","-","_","+","=","[","]","{","}","|",";",":","<",".",">","/","?"].choose);} ).add;
+ 
+~numbers = OSCresponder.new(nil, "sched", { arg time, resp, msg, counter; counter = counter+1;OF.interactWithSound("numSoundSketches",counter);} ).add; 
+~bigShoot = OSCresponder.new(nil, "/sched", { arg time, resp, msg;OF.effect("iperatou","shoot");} ).add; 
+~cutMotion = OSCresponder.new(nil, "sched", { arg time, resp, msg; OF.image("stopMotion", Array.series(83, 0, 1).choose);} ).add; 
+
+~iperatou.remove
+~cutMotion.remove;
+~type.remove;
+~numbers.remove;
+~bigShoot.remove;
+
+OF.interactWithSound("numSoundSketches",1);
+OF.renderString("string",["~","!","@","#","$","%","^","*","(",")","-","_","+","=","[","]","{","}","|",";",":","<",".",">","/","?"].choose);
+OF.renderString("string",'rsldjfh')
+OF.rgb("background", 0,0,0,2);
+
 PoscDef.msg0.source = 									Ptuple([												Ptuple(['interactWithSound', 'maxSoundElasticity', Pseq([0.1, 1], inf)] , inf),		Ptuple(['interactWithSound', 'numSoundSketches', Pseq([100, 699], inf)] , inf),		Ptuple(['interactWithSound', 'glBeginType', Pseq([0, 0], inf)] , inf)	], inf) ;
 PoscDef.dur0.source = Pseq([2],inf);
 Pdef(\myPat0).play;

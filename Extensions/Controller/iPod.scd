@@ -294,18 +294,9 @@ OSCresponder.new(nil, "/stopMotionPat3", { arg time, resp, msg; ~stopMotionDur.s
 OSCresponder.new(nil, "/stopMotionPat4", { arg time, resp, msg; ~stopMotionDur.source = Pseq(Array.geom(82, 0.003, 1.05).pyramid(2),inf);} ).add; 
 OSCresponder.new(nil, "/stopMotionPat5", { arg time, resp, msg; ~stopMotionDur.source = Pseq(Array.series(82, 0.003, 1.06),inf);} ).add; 
 OSCresponder.new(nil, "/stopMotionPat6", { arg time, resp, msg; ~stopMotionDur.source = Pseq(Array.series(82, 0.003, 1.07).shutter(13),inf);} ).add; 
-OSCresponder.new(nil, "/antPat", { arg time, resp, msg; 
-	if (msg[1] == 0)	{Pdef(\pngPattern_1).stop};
-	if (msg[1] == 1)	{Pdef(\pngPattern_1).play};
-} ).add; 
-OSCresponder.new(nil, "/stopMotion", { arg time, resp, msg; 
-	if (msg[1] == 0)	{Pdef(\stopMotion).stop};
-	if (msg[1] == 1)	{Pdef(\stopMotion).play};
-} ).add; 
-OSCresponderNode.new(nil, "/sketchBW", { arg time, resp, msg; 
-	if (msg[1] == 0)	{OF.rgb("r7",255);OF.rgb("g7",255);OF.rgb("b7",255)};
-	if (msg[1] == 1)	{OF.rgb("r7",0);OF.rgb("g7",0);OF.rgb("b7",0);};
-} ).add; 
+OSCresponder.new(nil, "/antPat", { arg time, resp, msg; 	if (msg[1] == 0)	{Pdef(\pngPattern_1).stop};			if (msg[1] == 1)	{Pdef(\pngPattern_1).play};			}).add; 
+OSCresponder.new(nil, "/stopMotion", { arg time, resp, msg; 	if (msg[1] == 0)	{Pdef(\stopMotion).stop};			if (msg[1] == 1)	{Pdef(\stopMotion).play};			} ).add; 
+OSCresponderNode.new(nil, "/sketchBW", { arg time, resp, msg; 	if (msg[1] == 0)	{OF.rgb("r7",255);OF.rgb("g7",255);OF.rgb("b7",255)};	if (msg[1] == 1)	{OF.rgb("r7",0);OF.rgb("g7",0);OF.rgb("b7",0);};	}).add; 
 
 Pdef(\pngPattern_1, Pbind(
 		\type, \osc, 
