@@ -38,8 +38,6 @@ Posc.play([\a, [[\c, 1], [\e]], [\rgb, 0.1, 0.5, 0.99], Psend(Pseq([\b, Beats(5)
 
 Posc.play(Pfuncn({ Synth.new(\default); \minimaseProtypo }, 1));
 
-
-
 */
 
 Posc : Pbind {
@@ -74,21 +72,30 @@ Posc : Pbind {
 //		}
 	}
 	
-	*broadcast { | msg | posc.broadcast(msg) }
+	*broadcast { | msg | 
+//		postf("% : posc: %, destinations: %, message: %\n", thisMethod.name, posc, posc.dest, msg);
+		posc.broadcast(msg) 
+	}
 
 	broadcast { | msg | 	// used by Psend to broadcast start, end
-		dest do: _.sendBundle(0, msg);
+//		postf("% : (instance method), destinations: %, message: %\n", thisMethod.name, dest, msg);
+		dest do: { | d |
+//			postf("destination: %, message: %\n", d, msg);
+			d.sendBundle(0, msg.asArray);
+		}
 	}
 	
 	*broadcastMessageWithBeat { | dest, msg, beat, latency |
-		
+//		postf("method: %, destinations: %, message: %\n", thisMethod.name, dest, msg);
 		if (msg.rank > 1) {
 			dest.asArray do: { | d |
+//				postf("method: % SENDING CHORD!, destination: %, message: %\n", thisMethod.name, d, msg);
 				d.sendBundle(latency, [\beat, beat]);
 				d.sendBundle(latency, *msg) };
 		}{
 			msg = msg.asArray;
 			dest.asArray do: { | d |
+//				postf("method: % SENDING SINGLE EVENT!, destination: %, message: %\n", thisMethod.name, d, msg);
 				d.sendBundle(latency, [\beat, beat]);
 				d.sendBundle(latency, msg);
 			}

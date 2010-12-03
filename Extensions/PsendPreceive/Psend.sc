@@ -57,7 +57,6 @@ Psend  : FilterPattern {
 	var <>name = \phrase;
 	
 	embedInStream { arg event;
-		
 //		[this, \startEMBED, event, /* event.parent, */ event[\posctest]].postln;
 		
 /* Following code should be used to enable playing many Posc instances in parallel: 
@@ -65,7 +64,7 @@ Psend  : FilterPattern {
 		posc = event[\posc] ? Posc;
 		Posc.broadcast(\start, name);
 
-*/			
+*/
 		Posc.broadcast(\start, name);
 		event = pattern.embedInStream(event);
 //		[this, \endEMBED, event].postln;

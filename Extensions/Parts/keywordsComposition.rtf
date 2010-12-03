@@ -1,0 +1,35 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf540
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red225\green170\blue79;\red175\green171\blue255;\red160\green170\blue45;
+\red250\green248\blue227;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs18 \cf2 /*\
+keyword composition by Aris Bezas Tue, 30 November 2010, 21:57\
+\
+menu\
+OF.keyword("ena")\
+OF.keyword("soma")\
+OF.background(0,0,0);\
+OF.grabScreen;\
+*/\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf1 (\
+~keywordsComposition = [\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 SyncAction\cf1 (\cf4 \\beats\cf1 , \{ \cf3 | beat |\cf1 \
+	beat.postln;\
+	switch (beat,\
+		\cf5 0\cf1 , \{	\
+		\},\
+		\cf5 10\cf1 , \{\
+		\}	\
+	);	\
+	if (beat > \cf5 0 \cf1 and:  \{ beat <  \cf5 288\cf1 ;\} and: \{ beat % \cf5 1 \cf1 == \cf5 0\cf1 ;\}) \{  \};\
+	\})\
+];\
+)\
+~sketchCompositionSender = \cf3 SyncSender\cf1 (\cf3 Pbind\cf1 .new);\
+~sketchCompositionSender.start;\
+~sketchCompositionSender.stop;\
+}

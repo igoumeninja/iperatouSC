@@ -40,10 +40,11 @@ Preceive.setEvent(\bla);
 
 
 
-NetAddr.localAddr.sendMsg(\start);
- 
+NetAddr.localAddr.sendMsg(\alpha);
+
 Preceive.event;
 
+Preceive.postOSC;
 
 Preceive(
 	\start->{ "playing".postln; },
@@ -61,15 +62,23 @@ Preceive : Event {
 	*new { | ... actions |
 		^super.new.init(actions)
 	}
-	
+
 	init { | actions |
 		actions do: { | a | this.addAction(a.key, a.value) };
 	}
-	
+
+	addAction { | key, action |
+		if (key isKindOf: Integer) {
+			this.addBeatAction(key, action);
+		}{
+			this.addTagAction(key, action);
+		}
+	}
+
 	play {
 		this.class.play(this);
 	}
-	
+
 	*play { | piece |
 		var newPiece;
 		thisProcess.recvOSCfunc = this;
@@ -91,13 +100,23 @@ Preceive : Event {
 //		[this, thisMethod.name, event].postln;
 		^event;
 	}
+	
+	*stopOSC {
+		// shortcut for Preceove.verbose = false;
+		verbose = false;
+	}
+	
+	*postOSC {
+		verbose = true;
+		this.play;
+	}
 
 	*stop {	
 		thisProcess.recvOSCfunc = nil;	
 	}
 	
 	*value { | time, addr, msg | 
-		if (verbose) { msg.postln; };
+		if (verbose) { msg.postln; };		
  		event[msg[0]].value(msg[1..]);
 	}
 
@@ -105,26 +124,20 @@ Preceive : Event {
 		this.getEvent.addAction(key, action);
 	}
 
-	addAction { | key, action |
-		if (key isKindOf: Integer) {
-			this.addBeatAction(key, action);
-		}{
-			this.addTagAction(key, action);
-		}
-	}
-
 	addBeatAction { | beat, action |
 		var beats;
-		beats = this[\beat];
+		beats = this['/beat'];
 		if (beats.isNil) {
-			this[\beat] = beats = BeatActions.new;
+			this['/beat'] = beats = BeatActions.new;
 		};
 		beats[beat] = action;
 	}
 
 	addTagAction { | tag, action |
 		// later some more work here to deal with play, stop and phrases
-		this[tag] = action;
+		tag = tag.asString;
+		if (tag[0] != $/) { tag = "/" ++ tag };
+		this[tag.asSymbol] = action;
 	}
 	
 	*removeAction { | key |
@@ -145,7 +158,7 @@ Preceive : Event {
 		var beats;
 		beats = this[\beats];
 		if (beats.isNil) {
-			this[\beats] = beats = IdentityDictionary.new;
+			this['/beats'] = beats = IdentityDictionary.new;
 		};
 		beats[beat] = action;
 	}
