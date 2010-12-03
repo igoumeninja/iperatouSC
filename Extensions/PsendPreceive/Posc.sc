@@ -56,9 +56,8 @@ Posc : Pbind {
 
 	*new { | ... pairs | 	// add the type - osc pair, so we dont have to provide it explicitly
 		pairs = pairs addAll: [\type, \osc];
-		//if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr.localAddr] };
-		if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr("127.0.0.1", 12345)] };
-		//if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr("169.254.233.24", 12345)] };
+		if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr.localAddr] };
+		//if (pairs includes: \dest) {} { pairs = pairs addAll: [\dest, NetAddr("127.0.0.1", 12345)] };
 		if (pairs includes: \beat) {} { pairs = pairs addAll: [\beat, Pseries(1, 1, inf)] };
 		^super.new(*pairs).init;
 	}
