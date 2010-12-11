@@ -12,7 +12,16 @@ OF.keyword("ena")\
 OF.keyword("soma")\
 OF.background(0,0,0);\
 OF.grabScreen;\
-*/\
+OF.photo;\
+OF.particlize\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf2 OF.photoParticles;\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2  OF.attractParticles\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 */\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 \cf1 (\
 ~keywordsComposition = [\
@@ -32,4 +41,16 @@ OF.grabScreen;\
 ~sketchCompositionSender = \cf3 SyncSender\cf1 (\cf3 Pbind\cf1 .new);\
 ~sketchCompositionSender.start;\
 ~sketchCompositionSender.stop;\
-}
+\
+\
+//\
+\
+n = NetAddr("127.0.0.1", 12345)\
+n.sendMsg("keyword", "ena");\
+n.sendMsg("\cf2 background\cf1 ", 0,0,0)\
+SendAmpFreq\
+\
+\
+NetAddr.localAddr.sendMsg("keyword", "ena");\
+\
+NetAddr.localAddr.sendMsg('keyword', "ena");}

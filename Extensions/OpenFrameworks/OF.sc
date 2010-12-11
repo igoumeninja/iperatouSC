@@ -1,4 +1,8 @@
-/* Dispatcher of messages as well as model for an ObjectFrameworks application */
+/* 
+Dispatcher of messages as well as model for an ObjectFrameworks application 
+
+101203: Problem with SC 3.4
+*/
 
 OF { 
 	classvar <default;
@@ -20,11 +24,11 @@ OF {
 	*doesNotUnderstand { | message ... args |
 		if (default.isNil) { default = this.new };
 		//format("here I will send message % with args %", message, args).postln;
-		format("OF_%%", message, args).postln;
-		default.send(message, args);
+		format("OF.%%", message, args).postln;
+		default.send(message.asString, args);
 	}
 	
 	send { | message, args |
-		addr.sendMsg(message, *args);
+		addr.sendMsg(message.asString, *args);
 	}
 }

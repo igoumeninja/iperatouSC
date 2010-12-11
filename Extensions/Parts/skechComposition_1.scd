@@ -12,7 +12,7 @@ Aris Bezas Fri, 19 November 2010, 19:34 PM
 (
 ~sketchComposition = [
 SyncAction(\beats, { | beat |
-	beat.postln;
+	("We are at beat:"+beat).postln;
 	switch (beat,
 		0, {	
 			// INITIALIZE
@@ -49,6 +49,13 @@ Pdef(\myPat0).play;
 Pdef(\myPat0).stop;
 
 //##########	Testing	##########
+(
+Posc.play(Ptuple([												Ptuple(['interactWithSound', 'maxSoundElasticity', Pseq([0.1, 1], inf)] , inf),				Ptuple(['interactWithSound', 'numSoundSketches', Pseq([100, 699], inf)] , inf),				Ptuple(['interactWithSound', 'glBeginType', Pseq([0, 0], inf)] , inf)		], inf),
+	\dur, 0.25,
+	\dest, [NetAddr.localAddr, NetAddr("127.0.0.1", 12345)]
+);
+)
+
 ~oFaddr = NetAddr("127.0.0.1", nil);
 OSCresponder.new(~oFaddr, nil, { arg time, resp, msg; 5.postln} ).add; 
 
