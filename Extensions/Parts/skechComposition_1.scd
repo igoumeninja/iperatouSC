@@ -4,7 +4,7 @@ Visual composition framework using sketch Class
 menu
 OF.interactWithSound("maxSoundElasticity", 0.1);
 OF.interactWithSound("glBeginType", 0);
-OF.interactWithSound("numSoundSketches", 10);
+OF.interactWithSound("numSoundSketches", 1);
 
 Aris Bezas Fri, 19 November 2010, 19:34 PM
 */
@@ -12,7 +12,7 @@ Aris Bezas Fri, 19 November 2010, 19:34 PM
 (
 ~sketchComposition = [
 SyncAction(\beats, { | beat |
-	beat.postln;
+	("We are in beat: "+beat).postln;
 	switch (beat,
 		0, {	
 			// INITIALIZE
@@ -21,9 +21,9 @@ SyncAction(\beats, { | beat |
 			PoscDef.msg0.source = 									Ptuple([												Ptuple(['empty'] , inf)							], inf) ;
 			PoscDef.dur0.source = Pseq([1],inf);
 			OF.interactWithSound("activate", 1);
-			OF.interactWithSound("maxSoundElasticity",0.1);
-			OF.interactWithSound("glBeginType", 0);
-			OF.interactWithSound("numSoundSketches", 10);			OF.rgb("background", 0,0,0,30);						OF.rgb("sound", 255,255,255,255);				},
+			OF.interactWithSound("maxSoundElasticity",0.99);
+			OF.interactWithSound("glBeginType", 1);
+			OF.interactWithSound("numSoundSketches", 990);			OF.rgb("background", 0,0,0,255);						OF.rgb("sound", 255,255,255,205);				},
 		10, {
 			
 		}	
